@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM } from "../constants/cartConstants";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
 
 export const cartReducer = (state = {cartItems: [] }, action) =>{
     switch(action.type){
@@ -13,6 +13,12 @@ export const cartReducer = (state = {cartItems: [] }, action) =>{
             } else{
                 return{ ...state, cartItems: [...state.cartItems, item]};
             }
+        case CART_REMOVE_ITEM:
+            return { ...state, cartItems: state.cartItems.filter( x => x.product !== action.payload),
+                //filtering out the product that its ID is equal to action.payload
+                // at cartAction we set payload to productId which will be deleted from cart
+                //updating redux store and removing the item from cart
+            };
             default:
                 return state;
     }
